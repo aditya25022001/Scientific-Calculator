@@ -1,2 +1,4 @@
 # Scientific-Calculator
-A scientific calculator trying to cover up differentiation as well
+A calculator which includes basics of 12th level i.e. permutation combination.
+Includes digital electronics concepts as well.
+Not completed until now. 
