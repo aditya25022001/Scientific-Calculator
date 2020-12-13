@@ -5,11 +5,24 @@ oper=[];         //store operator while infix to postfix
 solved=[];       //store the solved expression
 trignometry = ['sin','cos','tan','cot','sec','cosec','acosec','asec','acot','atan','acos','asin']
 qequation=[];
+mod='deg';
 var top=-1, up=-1;
 var update ,count=1;
 var num="", check="pr";
 numbers=['1','2','3','4','5','6','7','8','9','0','e','pi','.'];
 operators=['-','+','/','*','^','%','(',')','!','sqrt','E','pr-co'];
+function changeMod(ident){
+    if(ident=='rad'){
+        mod='rad';
+        document.getElementById('angle1').style.color='whitesmoke';
+        document.getElementById('angle2').style.color='rgb(121, 115, 115)';
+    }
+    if(ident=='deg'){
+        mod='deg';
+        document.getElementById('angle1').style.color='rgb(121, 115, 115)';
+        document.getElementById('angle2').style.color='whitesmoke';
+    }
+}
 function feedExpression(ident){
     if(ident=='C'){
         document.getElementById('screen-on-1').value='';
@@ -269,51 +282,105 @@ function popElementSolved(r){
             break;
         case 6:
             a=parseFloat(solved.pop());
-            solved.push(Math.sin(a));
+            if(mod=='rad'){
+                solved.push(Math.sin(a));
+            }
+            else{
+                solved.push(Math.sin(a*Math.PI/180))
+            }
             break;
         case 7:
             a=parseFloat(solved.pop());
-            solved.push(Math.cos(a));
+            if(mod=='rad'){
+                solved.push(Math.cos(a));
+            }
+            else{
+                solved.push(Math.cos(a*Math.PI/180))
+            }
             break;
         case 8:
             a=parseFloat(solved.pop());
-            solved.push(Math.tan(a));
+            if(mod=='rad'){
+                solved.push(Math.tan(a));
+            }
+            else{
+                solved.push(Math.tan(a*Math.PI/180))
+            }
             break;
         case 9:
             a=parseFloat(solved.pop());
-            solved.push(1/Math.tan(a));
+            if(mod=='rad'){
+                solved.push(1/Math.tan(a));
+            }
+            else{
+                solved.push(1/Math.tan(a*Math.PI/180))
+            }
             break;
         case 10:
             a=parseFloat(solved.pop());
-            solved.push(1/Math.cos(a));
+            if(mod=='rad'){
+                solved.push(1/Math.cos(a));
+            }
+            else{
+                solved.push(1/Math.cos(a*Math.PI/180))
+            }
             break;
         case 11:
             a=parseFloat(solved.pop());
-            solved.push(1/Math.sin(a));
+            if(mod=='rad'){
+                solved.push(1/Math.sin(a));
+            }
+            else{
+                solved.push(1/Math.sin(a*Math.PI/180))
+            }
             break;     
         case 12:
             a=parseFloat(solved.pop());
-            solved.push(Math.asin(a));
+            if(mod=='rad')
+                solved.push(Math.asin(a));
+            else{
+                solved.push(180*Math.asin(a)/Math.PI);
+            }
             break;
         case 13:
             a=parseFloat(solved.pop());
-            solved.push(Math.acos(a));
+            if(mod=='rad')
+                solved.push(Math.acos(a));
+            else{
+                solved.push(180*Math.acos(a)/Math.PI);
+            }
             break;
         case 14:
             a=parseFloat(solved.pop());
-            solved.push(Math.atan(a));
+            if(mod=='rad')
+                solved.push(Math.atan(a));
+            else{
+                solved.push(180*Math.atan(a)/Math.PI)
+            }
             break;
         case 15:
             a=parseFloat(solved.pop());
-            solved.push(Math.atan(1/a));
+            if(mod=='rad')
+                solved.push(Math.atan(1/a));
+            else{
+                solved.push(180*Math.atan(1/a)/Math.PI)
+            }
             break;
         case 16:
             a=parseFloat(solved.pop());
-            solved.push(Math.acos(1/a));
+            if(mod=='rad')
+                solved.push(Math.acos(1/a));
+            else{
+                solved.push(180*Math.acos(1/a)/Math.PI);
+            }
             break;
         case 17:
             a=parseFloat(solved.pop());
-            solved.push(Math.asin(1/a));
+            if(mod=='rad')
+                solved.push(Math.asin(1/a));
+            else{
+                solved.push(180*Math.asin(1/a)/Math.PI);
+            }
             break;   
         case 18:
             a=parseFloat(solved.pop());
@@ -385,14 +452,16 @@ function quadraticEquation(stri){
     if((b**2)-4*a*c<0){
         mod=Math.abs((b**2)-4*a*c)
         coeffIota = Math.sqrt(mod);
-        str1 = -b/(2*a)+'', str2='+'+coeffIota/(2*a)+'i';
+        str1 = (-b/(2*a)).toFixed(3)+'', str2='+'+(coeffIota/(2*a)).toFixed(3)+'i';
         root1 = str1+str2;
-        str1 = -b/(2*a)+'', str2='-'+coeffIota/(2*a)+'i';
+        str1 = (-b/(2*a)).toFixed(3)+'', str2='-'+(coeffIota/(2*a)).toFixed(3)+'i';
         root2 = str1+str2;
+        console.log(root1,root2);
     }
     else{
         root1 = (-b+Math.sqrt((b**2)-4*a*c))/(2*a);
         root2 = (-b-Math.sqrt((b**2)-4*a*c))/(2*a);
+        console.log(root1,root2);
     }    
     var str = qequation[0]+'x'+qequation[1].sup()+qequation[2]+'x'+qequation[3].sup()+qequation[5];
     document.getElementById('screen-on-2').value=str;
