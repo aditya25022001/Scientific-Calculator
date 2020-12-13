@@ -4,11 +4,12 @@ actualP=[];      //convert the expression in postfix form
 oper=[];         //store operator while infix to postfix
 solved=[];       //store the solved expression
 trignometry = ['sin','cos','tan','cot','sec','cosec','acosec','asec','acot','atan','acos','asin']
+qequation=[];
 var top=-1, up=-1;
-var update;
+var update ,count=1;
 var num="", check="pr";
 numbers=['1','2','3','4','5','6','7','8','9','0','e','pi','.'];
-operators=['-','+','/','*','^','%','(',')','!'];
+operators=['-','+','/','*','^','%','(',')','!','sqrt','E','pr-co'];
 function feedExpression(ident){
     if(ident=='C'){
         document.getElementById('screen-on-1').value='';
@@ -32,6 +33,9 @@ function feedExpression(ident){
                     break;
                 case "%":
                     ident="%";
+                case 'pr-co':
+                    check='co';
+                    break;
                 default:
                     num+=ident;
                     break;
@@ -42,20 +46,26 @@ function feedExpression(ident){
                 convetExp.push(num);
             num="";
             convetExp.push(ident);
+            console.log(convetExp);
+            if(ident=='E'){
+                convetExp.pop();
+                convetExp.push('*');
+                convetExp.push('10');
+                convetExp.push('^');
+            }
         }
+        if(ident=='sqrt')
+            ident=String.fromCharCode(8730)
         expression.push(ident);
         document.getElementById('screen-on-1').value+=ident;
     }
     if(ident == 'bspace'){
-        expression.pop();
-        if(convetExp.length>1){
-            update = convetExp.pop();   
-            if(update!='+' && update!='-' && update!='*' && update!='/' && update!='^' && update.length>1){
-                update = update.slice(0,update.length-1);
-                convetExp.push(update);
-            }
+        console.log(expression.pop());
+        update = convetExp.pop();   
+        if(operators.includes(update) && num.length!=0){
+            convetExp.push(update);
+            num=num.slice(0,num.length-1);
         }
-
         var str="";
         for(var i=0;i<expression.length;i++)
         str+=expression[i]
@@ -65,10 +75,16 @@ function feedExpression(ident){
         if(num!="")
             convetExp.push(num);
             convetExp.push(')');
+            console.log(convetExp);
         num='';
         switch (check){
             case 'co':
+                convetExp.pop();
                 primeComposite(convetExp.pop());    
+                break;
+            case 'equation':
+                console.log(document.getElementById('screen-on-1').value);
+                quadraticEquation(document.getElementById('screen-on-1').value);
                 break;
             default : 
                 getResult();
@@ -81,7 +97,16 @@ function feedExpression(ident){
         document.getElementById('screen-on-1').value = "Prime or Composite (";
     }
 }
+function factorial(number){
+    var i=1;
+    while(number!=0){
+        i*=number;
+        number-=1;
+    }
+    return i;
+}
 function primeComposite(number){
+    console.log(number);
     document.getElementById('screen-on-2').value = "Prime or Composite ("+number+")";
     str = "Prime";
     if(number == 1){
@@ -91,9 +116,10 @@ function primeComposite(number){
         str = "Neither Prime nor Composite";
     else{
         for(var i=2;i<=number/2;i++){
-            if(number%2==0)
+            if(number%i==0){
                 str = "Composite";
                 break;
+            }
         }
     }
     document.getElementById('screen-on-1').value=str;
@@ -139,18 +165,22 @@ function operation(a){
         return 19;
     if(a == 'u-')
         return 20;
+    if(a == 'sqrt')
+        return 21;
 }
 function priority(item){
     if(trignometry.includes(item))
         return 1;
-    if(item == "^")
+    if(item == "!" || item == 'sqrt')
         return 2;
-    if(item == "*" || item == "/" || item == '%')
+    if(item == "^")
         return 3;
-    if(item == "+" || item == "-")
+    if(item == "*" || item == "/" || item == '%')
         return 4;
-    if(item == "(" || item == ")")
+    if(item == "+" || item == "-")
         return 5;
+    if(item == "(" || item == ")")
+        return 6;
 }
 function pushOperator(item, value, parenthesis){
     if(oper.length==0 || parenthesis==1)
@@ -290,9 +320,17 @@ function popElementSolved(r){
             b=parseFloat(solved.pop());
             solved.push(b%a);
             break;
+        case 19:
+            a=parseFloat(solved.pop())
+            solved.push(factorial(a));
+            break;
         case 20:
             a=parseFloat(solved.pop());
             solved.push(0-a);
+            break;
+        case 21:
+            a=parseFloat(solved.pop());
+            solved.push(Math.sqrt(a));
             break;
     }
 }
@@ -311,6 +349,56 @@ function solve(){
             solved.push(parseFloat(actualP[i]));
         }
     }
+}
+function quadraticEquation(stri){
+    check='equation';
+    var num1="";
+    console.log(stri);
+    if(count==1){
+        console.log('Quadratic equation');
+        window.alert("Type in the quadratic equation using keyboard!");
+        count++;
+        return;
+    }
+    var index=0;
+    while(index<stri.length){
+        if(numbers.includes(stri.charAt(index)))
+            num1+=stri.charAt(index);
+        if(stri.charAt(index)=='x' || operators.includes(stri.charAt(index))){
+            if(stri.charAt(index)=='-'){
+                qequation.push(num1);
+                num1='-';    
+            }
+            else{
+                if(num1!="")
+                    qequation.push(num1);
+                num1="";
+            }
+        }
+        index++;
+    }
+    if(num1!="")
+        qequation.push(num1);
+    console.log(qequation);
+    var root1, root2;
+    var a = parseFloat(qequation[0]), b = parseFloat(qequation[2]), c = parseFloat(qequation[4]);
+    if((b**2)-4*a*c<0){
+        mod=Math.abs((b**2)-4*a*c)
+        coeffIota = Math.sqrt(mod);
+        str1 = -b/(2*a)+'', str2='+'+coeffIota/(2*a)+'i';
+        root1 = str1+str2;
+        str1 = -b/(2*a)+'', str2='-'+coeffIota/(2*a)+'i';
+        root2 = str1+str2;
+    }
+    else{
+        root1 = (-b+Math.sqrt((b**2)-4*a*c))/(2*a);
+        root2 = (-b-Math.sqrt((b**2)-4*a*c))/(2*a);
+    }    
+    var str = qequation[0]+'x'+qequation[1].sup()+qequation[2]+'x'+qequation[3].sup()+qequation[5];
+    document.getElementById('screen-on-2').value=str;
+    str = "Root 1 : "+root1+"   Root 2 : "+root2;
+    document.getElementById('screen-on-1').value=str;
+    check='pr';
 }
 function getResult(){
     convert();
