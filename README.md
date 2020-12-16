@@ -1,4 +1,7 @@
-# Scientific-Calculator
-A calculator which includes basics of 12th level i.e. permutation combination.
-Includes digital electronics concepts as well.
-Not completed until now. 
+Scientific Calculator
+Operations included:
+    * Simple operations
+    * Logarithmic and exponential functions
+    * Trigonometric functions
+    * Area of triangle
+    * Permutation and Combination
