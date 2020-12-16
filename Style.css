@@ -1,5 +1,5 @@
 body{
-    background-color:rgb(102, 102, 102);
+    background-color:rgb(59, 56, 56);
     cursor: pointer;
     margin: 0px;
 }
@@ -7,7 +7,7 @@ body{
     padding: 0;
     margin-left: 10px;
     width: 1500px;
-    height: 440px;
+    height: 360px;
     justify-content: space-evenly;
     display: flex;
     align-content: flex-start;
@@ -17,8 +17,8 @@ body{
 #screen-on-2{
     cursor: pointer;
     text-align: left;
-    width: 1486px;
-    overflow: scroll;
+    width: 1407.5px;
+    overflow: hidden;
     height: 110px;
     font-weight: lighter;
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif; 
@@ -29,15 +29,16 @@ body{
     border-width: 0px;   
     border-bottom-width: 0;
     background-color:rgb(44, 43, 43);
-    margin:22px 2px 0px 22px;
+    margin:54px -2px 0px 62px;
     position: sticky;
     text-align: right;
+    outline : none;
 }
 
 #screen-on-1{
     cursor: pointer;
     text-align: left;
-    width: 1486px;
+    width: 1407.5px;
     overflow: scroll;
     height: 110px;
     font-weight: lighter;
@@ -49,19 +50,20 @@ body{
     border-width: 0px;   
     border-bottom-width: 0;
     background-color:rgb(44, 43, 43);
-    margin:0px 2px 14px 22px;
+    margin:0px -2px -20px 62px;
     position: sticky;
     text-align: right;
+    outline: none;
 }
-.bas-mod-operations-two , .number-equal , .bas-mod-operations-one , .basic-operations , .bit_conv , .bit_undo{
+.bas-mod-operations-two , .number-equal , .bas-mod-operations-one , .basic-operations , .area , .bit_undo{
     display:flex;
     line-height: 70px;
     width: 240px;
-    align-content: flex-start;
+    align-content: inherit;
     flex-wrap: wrap;
-    margin: 8px 10px 10px 4px;
+    margin: 18px -50px 10px -50px;
 }
-.basic-operations>div , .number-equal>div , .bas-mod-operations-one>div , .bas-mod-operations-two>div , .bit_conv>div , .bit_undo>div{
+.basic-operations>div , .number-equal>div , .bas-mod-operations-one>div , .bas-mod-operations-two>div , .area>div , .bit_undo>div{
     background-color: #222;
     color: whitesmoke;
     border: 1px ridge rgb(49,49,49);
@@ -73,9 +75,44 @@ body{
     font-weight: lighter;
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
-.bit_undo>div:hover , .bit_conv>div:hover , .number-equal>div:hover , .basic-operations>div:hover , .bas-mod-operations-one>div:hover , .bas-mod-operations-two>div:hover{
+.bit_undo>div:hover , .area>div:hover , .number-equal>div:hover , .basic-operations>div:hover , .bas-mod-operations-one>div:hover , .bas-mod-operations-two>div:hover{
     background-color: rgb(77, 75, 75);
 }
 sup{
     font-size: 16px;
+}
+.container{
+    flex-direction: row;
+    text-align: center;
+    align-content: center;
+}
+.heading{
+    font-size: x-large;
+    font-weight: 400;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    text-align: center;
+    padding-top: 40px;
+    color: whitesmoke;
+    margin-top: -20px;
+    margin-left: -10px;
+    /*padding-bottom: -10px;*/
+
+}
+.bar-1{
+    width: 30px;
+    height: 3px;
+    margin:12px 0px 5px 12px;
+    background-color: whitesmoke;
+}
+.bar-2{
+    width: 30px;
+    height: 3px;
+    margin:0px 0px 5px 12px;
+    background-color: whitesmoke;
+}
+.bar-3{
+    width: 30px;
+    height: 3px;
+    margin:0px 0px 10px 12px;
+    background-color: whitesmoke;
 }
