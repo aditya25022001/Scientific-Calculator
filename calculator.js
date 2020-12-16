@@ -9,8 +9,11 @@ mod='deg';
 var top=-1, up=-1;
 var update ,count=1;
 var num="", check="pr";
-numbers=['1','2','3','4','5','6','7','8','9','0','e','pi','.'];
-operators=['-','+','/','*','^','%','(',')','!','sqrt','E','pr-co'];
+var s1, s2, s3, n, r, side='one', parameter='one';
+numbers=['1','2','3','4','5','6','7','8','9','0','e','pi','.','x','G','R','N'];
+operators=['-','+','/','*','^','%','(',')','!','sqrt','E','pr-co','ln','log','x'];
+operations=['^','*','/','+','-','sin','cos','tan','cot','sec','cosec','asin','acos','atan','acot','asec','acosec','%','!','u-','sqrt','ln','log'];
+area=['triangle']
 function changeMod(ident){
     if(ident=='rad'){
         mod='rad';
@@ -24,15 +27,53 @@ function changeMod(ident){
     }
 }
 function feedExpression(ident){
+    if(ident=='next' && check=='triangle'){
+        if(side=='one'){
+            s1=num;
+            num='';
+            document.getElementById('screen-on-1').value="b= ";
+            side="two";
+        }
+        else{
+            if(side=="two"){
+                s2=num;
+                num='';
+                document.getElementById('screen-on-1').value="c= ";
+            }
+            else{
+                s3=num;
+                num='';
+            }
+        }
+    }
+    if(ident=='next' && (check=='combination' || check=='permutation')){
+        if(parameter=='one'){
+            n=num;
+            num='';
+            document.getElementById('screen-on-1').value="r= ";
+            parameter='two';
+        }
+        else{
+            if(parameter=='two'){
+                r=num;
+                num='';
+            }
+        }
+    }
     if(ident=='C'){
+        document.getElementById('screen-on-2').style.fontSize='34px';
+        document.getElementById('screen-on-2').style.textAlign='right';
         document.getElementById('screen-on-1').value='';
         document.getElementById('screen-on-2').value='';
         expression = [];
         solved = [];
         actualP = [];
         check="pr";
+        num='';
         convetExp = ['('];
         oper = [];
+        side='one';
+        parameter='one';
     }
     if(numbers.includes(ident) || operators.includes(ident) || trignometry.includes(ident)){
         if(operators.includes(ident)!=true && trignometry.includes(ident)!=true){
@@ -48,6 +89,16 @@ function feedExpression(ident){
                     ident="%";
                 case 'pr-co':
                     check='co';
+                    break;
+                case 'G':
+                    num=6.6743*Math.pow(10,-11);
+                    console.log(num);
+                    break;                
+                case 'N':
+                    num=6.02214*Math.pow(10,23);
+                    break;
+                case 'R':
+                    num=8.3145;
                     break;
                 default:
                     num+=ident;
@@ -68,12 +119,12 @@ function feedExpression(ident){
             }
         }
         if(ident=='sqrt')
-            ident=String.fromCharCode(8730)
+            ident=String.fromCharCode(8730);
         expression.push(ident);
         document.getElementById('screen-on-1').value+=ident;
     }
     if(ident == 'bspace'){
-        console.log(expression.pop());
+        expression.pop();
         update = convetExp.pop();   
         if(operators.includes(update) && num.length!=0){
             convetExp.push(update);
@@ -85,25 +136,48 @@ function feedExpression(ident){
         document.getElementById('screen-on-1').value=str;
     }
     if(ident == '='){
-        if(num!="")
+        if(num!=""){
+            console.log({num});
             convetExp.push(num);
             convetExp.push(')');
-            console.log(convetExp);
-        num='';
+        }
         switch (check){
             case 'co':
                 convetExp.pop();
                 primeComposite(convetExp.pop());    
                 break;
             case 'equation':
-                console.log(document.getElementById('screen-on-1').value);
                 quadraticEquation(document.getElementById('screen-on-1').value);
+                break;
+            case 'triangle':
+                s3=num;
+                areaTriangle(s1,s2,s3);
+                num='';
+                break;
+            case 'fahr':
+                tempF(document.getElementById('screen-on-1').value);
+                num='';
+                break;
+            case 'celc':
+                tempC(document.getElementById('screen-on-1').value);
+                num='';
+                break;
+            case 'combination':
+                r=num;
+                combination(n,r);
+                num='';
+                break;
+            case 'permutation':
+                r=num;
+                permutation(n,r);
+                num='';
                 break;
             default : 
                 getResult();
+                console.log({convetExp});
+                num='';
                 break;
         }
-        
     }
     if(ident == "pr-co"){
         check = "co";
@@ -119,7 +193,6 @@ function factorial(number){
     return i;
 }
 function primeComposite(number){
-    console.log(number);
     document.getElementById('screen-on-2').value = "Prime or Composite ("+number+")";
     str = "Prime";
     if(number == 1){
@@ -138,51 +211,10 @@ function primeComposite(number){
     document.getElementById('screen-on-1').value=str;
 }
 function operation(a){
-    if(a=="^")
-        return 1;
-    if(a=="*")
-        return 2;
-    if(a=="/")
-        return 3;
-    if(a=="+")
-        return 4;
-    if(a=="-")
-        return 5;
-    if(a=="sin")
-        return 6;
-    if(a=="cos")
-        return 7;
-    if(a=="tan")
-        return 8;
-    if(a=="cot")
-        return 9;
-    if(a=="sec")
-        return 10;
-    if(a=="cosec")
-        return 11;
-    if(a=="asin")
-        return 12;
-    if(a=="acos")
-        return 13;
-    if(a=="atan")
-        return 14;
-    if(a=="acot")
-        return 15;
-    if(a=="asec")
-        return 16;
-    if(a=="acosec")
-        return 17;
-    if(a=="%")
-        return 18;
-    if(a=='!')
-        return 19;
-    if(a == 'u-')
-        return 20;
-    if(a == 'sqrt')
-        return 21;
+    return operations.indexOf(a)+1;
 }
 function priority(item){
-    if(trignometry.includes(item))
+    if(trignometry.includes(item) || item=='ln' || item=='log')
         return 1;
     if(item == "!" || item == 'sqrt')
         return 2;
@@ -196,8 +228,9 @@ function priority(item){
         return 6;
 }
 function pushOperator(item, value, parenthesis){
-    if(oper.length==0 || parenthesis==1)
+    if(oper.length==0 || parenthesis==1){
         oper.push(item);
+    }
     else{
         for(var i=oper.length-1;i>=0;i--){
             if(priority(oper[i])<=value && oper[i]!='(' && oper[i]!=')'){
@@ -222,8 +255,9 @@ function pushOperator(item, value, parenthesis){
 }
 function pushElement(item, mark){
     if(mark == 1){
-        if(item !='(' && item != ')')
+        if(item !='(' && item != ')'){
             actualP.push(item);
+        }
     }
     else{
         if(item == '(')
@@ -247,11 +281,13 @@ function convert(){
             pushElement(id, 2);
         }
     }
-    for(var i=oper.length-1;i>=0;i--)
+    for(var i=oper.length-1;i>=0;i--){
         if(oper[i]!='(' && oper[i]!=')')
             pushElement(oper.pop(), 1);
-    console.log(convetExp);
-    console.log(actualP);
+        else{
+            oper.pop();
+        }
+    }
 }
 function popElementSolved(r){
     switch (r){
@@ -399,13 +435,21 @@ function popElementSolved(r){
             a=parseFloat(solved.pop());
             solved.push(Math.sqrt(a));
             break;
+        case 22:
+            a=parseFloat(solved.pop());
+            solved.push(Math.log(a));
+            break;
+        case 23:
+            a=parseFloat(solved.pop());
+            solved.push(Math.log10(a));
+            break;
     }
 }
 function solve(){
     var rank;
     for(var i=0;i<actualP.length;i++){
         if(operators.includes(actualP[i]) || trignometry.includes(actualP[i])){
-            if((actualP[i]=='-' && priority(actualP[i+1])<=4) || (actualP[i]=='-' && solved.length==1))
+            if((actualP[i]=='-' && priority(actualP[i+1])<=4) || (actualP[i]=='-' && solved.length==1) || (actualP[i]=='-' && priority(actualP[i+1])==5))
                 rank=operation('u-');
             else{
                 rank = operation(actualP[i])
@@ -418,15 +462,13 @@ function solve(){
     }
 }
 function quadraticEquation(stri){
-    check='equation';
-    var num1="";
-    console.log(stri);
-    if(count==1){
-        console.log('Quadratic equation');
-        window.alert("Type in the quadratic equation using keyboard!");
-        count++;
+    if(stri.length==2){
+        check='equation';
+        setStyle();
+        document.getElementById('screen-on-2').value="Quadratic equation : ax2+"+"bx+c = 0";
         return;
     }
+    var num1="";
     var index=0;
     while(index<stri.length){
         if(numbers.includes(stri.charAt(index)))
@@ -446,7 +488,6 @@ function quadraticEquation(stri){
     }
     if(num1!="")
         qequation.push(num1);
-    console.log(qequation);
     var root1, root2;
     var a = parseFloat(qequation[0]), b = parseFloat(qequation[2]), c = parseFloat(qequation[4]);
     if((b**2)-4*a*c<0){
@@ -456,37 +497,150 @@ function quadraticEquation(stri){
         root1 = str1+str2;
         str1 = (-b/(2*a)).toFixed(3)+'', str2='-'+(coeffIota/(2*a)).toFixed(3)+'i';
         root2 = str1+str2;
-        console.log(root1,root2);
     }
     else{
         root1 = (-b+Math.sqrt((b**2)-4*a*c))/(2*a);
         root2 = (-b-Math.sqrt((b**2)-4*a*c))/(2*a);
-        console.log(root1,root2);
-    }    
-    var str = qequation[0]+'x'+qequation[1].sup()+qequation[2]+'x'+qequation[3].sup()+qequation[5];
-    document.getElementById('screen-on-2').value=str;
-    str = "Root 1 : "+root1+"   Root 2 : "+root2;
+    }       
+    var str = "Root 1 : "+root1+"   Root 2 : "+root2;
     document.getElementById('screen-on-1').value=str;
+    document.getElementById('screen-on-2').value="a="+a+" b="+b+" c="+c;
     check='pr';
+    document.getElementById('screen-on-2').style.fontSize='34px';
+    document.getElementById('screen-on-2').style.textAlign='right';
+    document.getElementById('screen-on-2').value="";
+}
+function areaTriangle(side1, side2, side3){
+    if(check!='triangle'){
+        check='triangle';
+        setStyle();
+        document.getElementById('screen-on-2').value='Ar. '+String.fromCharCode(916);
+        document.getElementById('screen-on-1').value='a= ';
+        return;
+    }
+    else{
+        var semiP=(parseFloat(side1)+parseFloat(side2)+parseFloat(side3))/2
+        if(semiP<=side1 || semiP<=side2 || semiP<=side3){
+            document.getElementById('screen-on-1').value="Invalid triangle sides";
+            return;
+        }
+        else{
+            var answer=Math.sqrt(semiP*(semiP-side1)*(semiP-side2)*(semiP-side3))
+            document.getElementById('screen-on-1').value=answer+" sq. unit";
+        }
+    }
+}
+function tempF(num){
+    if(check!='fahr'){
+        check='fahr';
+        setStyle();
+        document.getElementById('screen-on-2').value=String.fromCharCode(8457)+String.fromCharCode(8594)+String.fromCharCode(8451);
+        return;
+    }
+    else{
+        answer=(5*parseFloat(num)-160)/9;
+        document.getElementById('screen-on-1').value=answer+String.fromCharCode(8451);
+    }
+}
+function tempC(num){
+    if(check!='celc'){
+        check='celc';
+        setStyle();
+        document.getElementById('screen-on-2').value=String.fromCharCode(8451)+String.fromCharCode(8594)+String.fromCharCode(8457);
+        return;
+    }
+    else{
+        answer=(9*parseFloat(num)/5)+32;
+        document.getElementById('screen-on-1').value=answer+String.fromCharCode(8457);
+    }
+}
+function combination(num,r){
+    if(check!='combination'){
+        check='combination';
+        setStyle();
+        document.getElementById('screen-on-2').value='nCr';
+        document.getElementById('screen-on-1').value='n= ';
+        return;
+    }
+    else{
+        console.log({num},{r});
+        if(parseFloat(r)<=parseFloat(num)){
+            var n0=factorial(parseFloat(num));
+            var r0=factorial(parseFloat(r));
+            var n0r0=factorial(parseFloat(num)-parseFloat(r));
+            var result=n0/(r0*n0r0);
+            document.getElementById('screen-on-2').value='';
+            document.getElementById('screen-on-1').value=result;
+            convetExp=["("];
+            expression=[];
+            expression.push(result.toString())
+            convetExp.push(result.toString());
+            console.log(convetExp);
+            check='pr';
+            updateStyle();
+
+        }
+        else{
+            document.getElementById('screen-on-1').value="Invalid inputs";
+        }
+    }
+}
+function permutation(num,r){
+    if(check!='permutation'){
+        check='permutation';
+        setStyle();
+        document.getElementById('screen-on-2').value='nPr';
+        document.getElementById('screen-on-1').value='n= ';
+        return;
+    }
+    else{
+        console.log({num},{r});
+        if(parseFloat(r)<=parseFloat(num)){
+            var n0=factorial(parseFloat(num));
+            var n0r0=factorial(parseFloat(num)-parseFloat(r));
+            var result=n0/n0r0;
+            document.getElementById('screen-on-2').value='';
+            document.getElementById('screen-on-1').value=result;
+            convstExp=["("];
+            expression=[];
+            expression.push(result.toString())
+            convetExp.push(result.toString());
+            check='pr';
+            updateStyle();
+
+        }
+        else{
+            document.getElementById('screen-on-1').value="Invalid inputs";
+        }
+    }
+}
+function setStyle(){
+    document.getElementById('screen-on-2').style.textAlign='left';
+    document.getElementById('screen-on-2').style.fontSize='20px';
+}
+function updateStyle(){
+    document.getElementById('screen-on-2').style.fontSize='34px';
+    document.getElementById('screen-on-2').style.textAlign='right';
 }
 function getResult(){
+    if(check=='combination' || check=='permutation')
+        convetExp.push(')');
     convert();
     solve();
-    console.log(actualP);
-    console.log(convetExp);
-    console.log(solved);
+    console.log({convetExp},{actualP},{solved});
     var str="";
+    console.log({expression});
     for(var i=0;i<expression.length;i++)
         str+=expression[i];
     document.getElementById('screen-on-2').value=str;
     str=solved.pop();
-    console.log(str);
     if (isNaN(str))
         str = "Invalid expression";
     document.getElementById('screen-on-1').value=str;
     expression = [];
     actualP = [];
-    convetExp = [];
+    convetExp = ['('];
+    convetExp.push(str);
     solved = [];
     oper = [];
 }
