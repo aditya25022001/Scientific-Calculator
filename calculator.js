@@ -10,7 +10,6 @@ var top=-1, up=-1;
 var update ,count=1;
 var num="", check="pr";
 var s1, s2, s3, n, r, side='one', parameter='one';
-console.log("Aditya's Calculator");
 numbers=['1','2','3','4','5','6','7','8','9','0','e','pi','.','x','G','R','N'];
 operators=['-','+','/','*','^','%','(',')','!','sqrt','E','pr-co','ln','log','x'];
 operations=['^','*','/','+','-','sin','cos','tan','cot','sec','cosec','asin','acos','atan','acot','asec','acosec','%','!','u-','sqrt','ln','log'];
@@ -628,16 +627,17 @@ function getResult(){
         convetExp.push(')');
     convert();
     solve();
+    console.log({convetExp},{actualP},{solved});
     var str="";
+    console.log({expression});
     for(var i=0;i<expression.length;i++)
         str+=expression[i];
-    expression=[];
     document.getElementById('screen-on-2').value=str;
     str=solved.pop();
     if (isNaN(str))
         str = "Invalid expression";
-    expression.push(str.toString());
     document.getElementById('screen-on-1').value=str;
+    expression = [];
     actualP = [];
     convetExp = ['('];
     convetExp.push(str);
