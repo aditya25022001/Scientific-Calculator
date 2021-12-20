@@ -1,19 +1,19 @@
-expression=[];   //get expression on the screen
-convetExp=['('];    //convert expression in legal terms
-actualP=[];      //convert the expression in postfix form
-oper=[];         //store operator while infix to postfix
-solved=[];       //store the solved expression
-trignometry = ['sin','cos','tan','cot','sec','cosec','acosec','asec','acot','atan','acos','asin']
-qequation=[];
-mod='deg';
+let expression=[];   //get expression on the screen
+let convetExp=['('];    //convert expression in legal terms
+let actualP=[];      //convert the expression in postfix form
+let oper=[];         //store operator while infix to postfix
+let solved=[];       //store the solved expression
+const trignometry = ['sin','cos','tan','cot','sec','cosec','acosec','asec','acot','atan','acos','asin']
+let qequation=[];
+var mod='deg';
 var top=-1, up=-1;
 var update ,count=1;
 var num="", check="pr";
 var s1, s2, s3, n, r, side='one', parameter='one';
-numbers=['1','2','3','4','5','6','7','8','9','0','e','pi','.','x','G','R','N'];
-operators=['-','+','/','*','^','%','(',')','!','sqrt','E','pr-co','ln','log','x'];
-operations=['^','*','/','+','-','sin','cos','tan','cot','sec','cosec','asin','acos','atan','acot','asec','acosec','%','!','u-','sqrt','ln','log'];
-area=['triangle']
+const numbers=['1','2','3','4','5','6','7','8','9','0','e','pi','.','x','G','R','N'];
+const operators=['-','+','/','*','^','%','(',')','!','sqrt','E','pr-co','ln','log','x'];
+const operations=['^','*','/','+','-','sin','cos','tan','cot','sec','cosec','asin','acos','atan','acot','asec','acosec','%','!','u-','sqrt','ln','log'];
+let area=['triangle']
 function changeMod(ident){
     if(ident=='rad'){
         mod='rad';
