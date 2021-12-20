@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+    <head>
+        <title>Calculator</title>
+        <link rel="stylesheet" href="Style.css">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css">
+        <script src="calculator.js"></script>
+    </head>
+    <body>
+        <div class="goto">
+            <div class="bar-1"></div>
+            <div class="bar-2"></div>
+            <div class="bar-3"></div> 
+        </div>
+        <div class="heading" id="heading">INTERMEDIATE SCIENTIFIC CALCULATOR</div>
+        <div class="screen" id='screen' style="width: 1500px;">
+            <input id="screen-on-2" class="screen-on-2" type="text" disabled>
+            <input id="screen-on-1" class="screen-on-1" type="text">
+        </div>
+        <div class="body" id="body">
+            <div class="number-equal" id="number-equal" style="display: flex; flex-wrap: wrap;">
+                <div id="seven" style="width: 80px; height: 70px;" onclick="feedExpression('7')">7</div>
+                <div id="eight" style="width: 80px; height: 70px;" onclick="feedExpression('8')">8</div>
+                <div id="nine" style="width: 80px; height: 70px;" onclick="feedExpression('9')">9</div>
+                <div id="four" style="width: 80px; height: 70px;" onclick="feedExpression('4')">4</div>
+                <div id="five" style="width: 80px; height: 70px;" onclick="feedExpression('5')">5</div>
+                <div id="six" style="width: 80px; height: 70px;" onclick="feedExpression('6')">6</div>
+                <div id="one" style="width: 80px; height: 70px;" onclick="feedExpression('1')">1</div>
+                <div id="two" style="width: 80px; height: 70px;" onclick="feedExpression('2')">2</div>
+                <div id="three" style="width: 80px; height: 70px;" onclick="feedExpression('3')">3</div>
+                <div id="decimal" style="width: 80px; height: 70px;" onclick="feedExpression('.')">.</div>
+                <div id="zero" style="width: 80px; height: 70px;" onclick="feedExpression('0')">0</div>
+                <div id="equal-to" style="width: 80px; height: 70px;" onclick="feedExpression('=')"> = </div>
+            </div>
+            <div class="basic-operations" id="basic-operations" style="display: flex; flex-wrap: wrap;">   
+                <div id="add" style="width: 80px; height: 70px;" onclick="feedExpression('+')">+</div>
+                <div id="substract" style="width: 80px; height: 70px;" onclick="feedExpression('-')">-</div>
+                <div id="multiply" style="width: 80px; height: 70px;" onclick="feedExpression('*')">*</div>
+                <div id="divide" style="width: 80px; height: 70px;" onclick="feedExpression('/')">/</div>
+                <div id="sqrt" style="width: 80px; height: 70px;" onclick="feedExpression('sqrt')" >&radic;</div>
+                <div id="pie" style="width: 80px; height: 70px;" onclick="feedExpression('pi')">&#928;</div>
+                <div id="fact" style="width: 80px; height: 70px;" onclick="feedExpression('!')">!</div>
+                <div id="pow" style="width: 80px; height: 70px;" onclick="feedExpression('^')">x<sup>y</sup></div>
+                <div id="root" style="width: 80px; height: 70px;" onclick="feedExpression('E')">E</div>
+                <div id="root" style="width: 140px; height: 70px;" onclick="feedExpression('%')">Mod</div>
+                <div id="modulus" style="width: 100px; height: 70px;" onclick="feedExpression('x')">x</div>
+            </div>                
+            <div class="bas-mod-operations-one" id="bas-mod-operations-one" style="display: flex; flex-wrap: wrap;">
+                <div id="expo" style="width: 80px; height: 70px;" onclick="feedExpression('e')">e</div>
+                <div id="ln" style="width: 80px; height: 70px;" onclick="feedExpression('ln')">ln</div>
+                <div id="log" style="width: 80px; height: 70px;" onclick="feedExpression('log')">log</div>
+                <div id="angle1" style="width: 120px; height: 70px; color: rgb(121, 115, 115);" onclick="changeMod('rad')">Rad</div> 
+                <div id="angle2" style="width: 120px; height: 70px;" onclick="changeMod('deg')">Deg</div> 
+                <div id="quad" style="width: 236px; height: 70px;" onclick="quadraticEquation('hi')">Quadratic Eq<sup>n</sup></div> 
+                <div id="prime-composite" style="width: 236px; height: 70px; font-size: 24px;" onclick="feedExpression('pr-co')">Prime or Composite</div>    
+            </div>
+            <div class="bas-mod-operations-two" id="bas-mod-operations-two" style="display: flex; flex-wrap: wrap;">
+                <div id="sin" style="width: 80px; height: 70px;" onclick="feedExpression('sin')">sin</div>
+                <div id="cos" style="width: 80px; height: 70px;" onclick="feedExpression('cos')">cos</div>
+                <div id="tan" style="width: 80px; height: 70px;" onclick="feedExpression('tan')">tan</div>
+                <div id="cot" style="width: 80px; height: 70px;" onclick="feedExpression('cot')">cot</div>
+                <div id="sec" style="width: 80px; height: 70px;" onclick="feedExpression('sec')">sec</div>
+                <div id="cosec" style="width: 80px; height: 70px;" onclick="feedExpression('cosec')">cosec</div>
+                <div id="asin" style="width: 80px; height: 70px;" onclick="feedExpression('asin')">sin<sup>-1</sup></div>
+                <div id="acos" style="width: 80px; height: 70px;" onclick="feedExpression('acos')">cos<sup>-1</sup></div>
+                <div id="atan" style="width: 80px; height: 70px;" onclick="feedExpression('atan')">tan<sup>-1</sup></div>
+                <div id="acot" style="width: 80px; height: 70px;" onclick="feedExpression('acot')">cot<sup>-1</sup></div>
+                <div id="asec" style="width: 80px; height: 70px;" onclick="feedExpression('asec')">sec<sup>-1</sup></div>
+                <div id="acosec" style="width: 80px; height: 70px;" onclick="feedExpression('acosec')">cosec<sup>-1</sup></div>         
+            </div>
+            <div class="area" id="area" style="display: flex; flex-wrap: wrap;">
+                <div id="circle" style="width: 236px; height: 70px;" onclick="tempF('f2c')">&#8457 &rarr; &#8451</div>
+                <div id="sphere" style="width: 236px; height: 70px;" onclick="tempC('c2f')">&#8451 &rarr; &#8457</div>
+                <div id="combination" style="width: 120px; height: 70px;" onclick="combination('combination')"><sup>n</sup>C<sub>r</sub></div>
+                <div id="permutation" style="width: 120px; height: 70px;" onclick="permutation('permutation')"><sup>n</sup>P<sub>r</sub></div>
+                <div id="triangle" style="width: 236px; height: 70px;" onclick="areaTriangle('triangle','hello','world')">Area of Triangle</div>            
+            </div>
+            <div class="bit_undo" id="bit_undo" style="display: flex; flex-wrap: wrap;">
+                <div id="clear" style="width: 120px; height: 70px;" onclick="feedExpression('C')">C</div>
+                <div id="backspace" style="width: 120px; height: 70px;" onclick="feedExpression('bspace')"><i class="fas fa-backspace" style="font-size: 22px;"></i></div>
+                <div id="parenthesis-l" style="width: 120px; height: 70px;" onclick="feedExpression('(')">(</div>
+                <div id="parenthesis-r" style="width: 120px; height: 70px;" onclick="feedExpression(')')">)</div>
+                <div id="and" style="width: 120px; height: 70px;" onclick="feedExpression('next')">&rarr;</div>
+                <div id="or" style="width: 120px; height: 70px;" onclick="feedExpression('G')">G Nm<sup>2</sup>kg<sup>-2</sup></div>
+                <div id="not" style="width: 120px; height: 70px;" onclick="feedExpression('R')">R Jmol<sup>-1</sup>K<sup>-1</sup></div>
+                <div id="xor" style="width: 120px; height: 70px;" onclick="feedExpression('N')">N mol<sup>-1</sup></div>
+            </div>
+        </div>
+    </body>
+    
